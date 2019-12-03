@@ -90,10 +90,47 @@ const renderGlutenFreeCrust = () => {
 
 const renderButtons = () => {
   // Iteration 3: add/remove the class "active" of each `<button class="btn">`
+  document.querySelectorAll('.btn').forEach(($button) => {
+    $button.classList.remove('active');
+  });
+
+  if (state.pepperonni) document.querySelector('.btn-pepperonni').classList.add('active');
+  if (state.mushrooms) document.querySelector('.btn-mushrooms').classList.add('active');
+  if (state.greenPeppers) document.querySelector('.btn-green-peppers').classList.add('active');
+  if (state.whiteSauce) document.querySelector('.btn-sauce').classList.add('active');
+  if (state.glutenFreeCrust) document.querySelector('.btn-crust').classList.add('active');
 };
 
 const renderPrice = () => {
   // Iteration 4: change the HTML of `<aside class="panel price">`
+  const panelPrice = document.querySelector('.panel.price');
+  const panelPriceList = panelPrice.querySelector('ul');
+  const panelPriceStrong = panelPrice.querySelector('strong');
+  let total = basePrice;
+  let ulHTML = '';
+
+  if (document.querySelector('.btn-pepperonni').classList.contains('active')) {
+    ulHTML += '<li>$1 pepperonni</li>';
+    total += 1;
+  }
+  if (document.querySelector('.btn-mushrooms').classList.contains('active')) {
+    ulHTML += '<li>$1 mushrooms</li>';
+    total += 1;
+  }
+  if (document.querySelector('.btn-green-peppers').classList.contains('active')) {
+    ulHTML += '<li>$1 green peppers</li>';
+    total += 1;
+  }
+  if (document.querySelector('.btn-sauce').classList.contains('active')) {
+    ulHTML += '<li>$3 white sauce</li>';
+    total += 3;
+  }
+  if (document.querySelector('.btn-crust').classList.contains('active')) {
+    ulHTML += '<li>$5 gluten-free crust</li>';
+    total += 5;
+  }
+  panelPriceList.innerHTML = ulHTML;
+  panelPriceStrong.innerText = `$${total}`;
 };
 
 // This function takes care of rendering the pizza based on the state
